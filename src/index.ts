@@ -26,6 +26,7 @@ async function takeScreenshot(url: string, selector: string) {
         headless: chromium.headless,
         ignoreHTTPSErrors: true
     });
+    console.log("Got a browser");
     const page = await browser.newPage();
     await page.emulate(iPhone)
     await page.goto(url);
@@ -34,6 +35,7 @@ async function takeScreenshot(url: string, selector: string) {
     // @ts-ignore
     await page.evaluate((element) => element?.scrollIntoView(), element);
     const screenshot = await element!.screenshot();
+    await page.close()
     await browser.close();
     return screenshot;
 }
